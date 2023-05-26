@@ -1,5 +1,6 @@
 package estert.domain.house
 
+import estert.domain.house_detail.HouseDetail
 import jakarta.persistence.*
 import java.math.BigDecimal
 
@@ -34,6 +35,10 @@ class House (
         private set
 
     var longitude: BigDecimal = longitude
+        private set
+
+    @OneToMany(mappedBy = "house", cascade = [CascadeType.REMOVE])
+    var houseDetails: MutableSet<HouseDetail> = hashSetOf()
         private set
 
     @Id

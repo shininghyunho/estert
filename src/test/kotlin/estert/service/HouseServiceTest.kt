@@ -14,16 +14,16 @@ import io.mockk.verify
 import java.math.BigDecimal
 import java.util.*
 
-val houseRepository = mockk<HouseRepository>()
-val houseService = HouseService(houseRepository)
-val house = House(
-    jibunAddress = "jibunAddress",
-    roadAddress = "roadAddress",
-    danjiName = "danjiName",
-    postCode = 12345,
-    latitude = BigDecimal("123.123"),
-    longitude = BigDecimal("123.123"))
 class HouseServiceBehaviorSpecTest: BehaviorSpec({
+    val houseRepository = mockk<HouseRepository>()
+    val houseService = HouseService(houseRepository)
+    val house = House(
+        jibunAddress = "jibunAddress",
+        roadAddress = "roadAddress",
+        danjiName = "danjiName",
+        postCode = 12345,
+        latitude = BigDecimal("123.123"),
+        longitude = BigDecimal("123.123"))
     // house 저장 테스트
     Given("부동산 저장 요청시") {
         val request = HouseSaveRequest.of(house)
