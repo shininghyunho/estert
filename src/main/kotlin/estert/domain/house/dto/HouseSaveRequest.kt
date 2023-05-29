@@ -21,7 +21,7 @@ data class HouseSaveRequest (
         )
     }
     companion object {
-        fun of(house: House): HouseSaveRequest {
+        fun from(house: House): HouseSaveRequest {
             return HouseSaveRequest(
                 jibunAddress = house.jibunAddress,
                 roadAddress = house.roadAddress,

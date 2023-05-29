@@ -19,12 +19,23 @@ class HouseService (
     fun findById(id: Long): HouseGetResponse {
         val house = houseRepository.findById(id)
             .orElseThrow { IllegalArgumentException("$id`에 해당하는 아파트가 존재하지 않습니다.") }
-        return HouseGetResponse.of(house)
+        return HouseGetResponse.from(house)
+    }
+
+    @Transactional(readOnly = true)
+    fun findByIdWithHouseDetails(id: Long): HouseGetResponse {
+        return HouseGetResponse.fromWithHouseDetails(houseRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("$id`에 해당하는 아파트가 존재하지 않습니다.") })
     }
 
     @Transactional(readOnly = true)
     fun findByRoadAddressAndDanjiName(roadAddress: String, danjiName: String): HouseGetResponse {
-        return HouseGetResponse.of(houseRepository.findByRoadAddressAndDanjiName(roadAddress, danjiName))
+        return HouseGetResponse.from(houseRepository.findByRoadAddressAndDanjiName(roadAddress, danjiName))
+    }
+
+    @Transactional(readOnly = true)
+    fun findByRoadAddressAndDanjiNameWithHouseDetails(roadAddress: String, danjiName: String): HouseGetResponse {
+        return HouseGetResponse.fromWithHouseDetails(houseRepository.findByRoadAddressAndDanjiName(roadAddress, danjiName))
     }
 
     @Transactional
