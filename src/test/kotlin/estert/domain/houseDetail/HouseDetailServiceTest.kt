@@ -1,4 +1,4 @@
-package estert.service
+package estert.domain.houseDetail
 
 import estert.domain.house.House
 import estert.domain.house.HouseRepository

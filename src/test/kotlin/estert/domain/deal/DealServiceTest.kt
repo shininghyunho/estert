@@ -1,8 +1,5 @@
-package estert.service
+package estert.domain.deal
 
-import estert.domain.deal.Deal
-import estert.domain.deal.DealRepository
-import estert.domain.deal.DealService
 import estert.domain.deal.dto.DealSaveRequest
 import estert.domain.house.House
 import estert.domain.house_detail.HouseDetail

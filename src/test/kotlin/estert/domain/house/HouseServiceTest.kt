@@ -1,22 +1,27 @@
-package estert.service
+package estert.domain.house
 
-import estert.domain.house.House
-import estert.domain.house.HouseRepository
-import estert.domain.house.HouseService
+import estert.domain.deal.Deal
 import estert.domain.house.dto.HouseSaveRequest
 import estert.domain.house.dto.HouseUpdateRequest
+import estert.domain.house_detail.HouseDetail
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldExist
+import io.kotest.matchers.collections.shouldHaveAtLeastSize
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldHave
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.*
 
 class HouseServiceBehaviorSpecTest: BehaviorSpec({
     val houseRepository = mockk<HouseRepository>()
     val houseService = HouseService(houseRepository)
+
     val house = House(
         jibunAddress = "jibunAddress",
         roadAddress = "roadAddress",
@@ -24,9 +29,18 @@ class HouseServiceBehaviorSpecTest: BehaviorSpec({
         postCode = 12345,
         latitude = BigDecimal("123.123"),
         longitude = BigDecimal("123.123"))
+    val houseDetail = HouseDetail(
+        dedicatedArea = "123.123".toBigDecimal(),
+        house = house
+    )
+    val deal = Deal(
+        cost = 100000000,
+        dealDate = LocalDateTime.now(),
+        houseDetail = houseDetail
+    )
     // house 저장 테스트
     Given("부동산 저장 요청시") {
-        val request = HouseSaveRequest.of(house)
+        val request = HouseSaveRequest.from(house)
         When("정상 요청을 하면") {
             every { houseRepository.save(any()).id } returns 1L
             val response=houseService.save(request)
@@ -60,6 +74,28 @@ class HouseServiceBehaviorSpecTest: BehaviorSpec({
                 }
             }
         }
+        When("존재하는 ID로 HouseDetails 까지 요청하면") {
+            every { houseRepository.findById(any()) } returns Optional.of(house)
+            val response = houseService.findByIdWithHouseDetails(1L)
+            Then("부동산이 반환된다") {
+                response.jibunAddress shouldBe "jibunAddress"
+            }
+            Then("부동산 상세정보가 반환된다") {
+                response.houseDetails shouldHaveSize 1
+            }
+            Then("거래 정보가 반환된다") {
+                response.houseDetails.first().deals shouldHaveSize 1
+            }
+        }
+        When("존재하지 않는 ID로 HouseDetails 까지 요청하면") {
+            every { houseRepository.findById(any()) } returns Optional.empty()
+            Then("Exception 이 발생한다") {
+                shouldThrow<Exception> {
+                    houseService.findByIdWithHouseDetails(1L)
+                }
+            }
+        }
+
         When("유일한 (도로명,단지명)으로 조회하면") {
             every { houseRepository.findByRoadAddressAndDanjiName(any(), any()) } returns house
             val response = houseService.findByRoadAddressAndDanjiName("roadAddress", "danjiName")
@@ -85,6 +121,35 @@ class HouseServiceBehaviorSpecTest: BehaviorSpec({
             Then("Exception 이 발생한다") {
                 shouldThrow<Exception> {
                     houseService.findByRoadAddressAndDanjiName("roadAddress", "danjiName")
+                }
+            }
+        }
+        When("유일한 (도로명,단지명)으로 HouseDetails 까지 조회하면") {
+            every { houseRepository.findByRoadAddressAndDanjiName(any(), any()) } returns house
+            val response = houseService.findByRoadAddressAndDanjiNameWithHouseDetails("roadAddress", "danjiName")
+            Then("부동산이 반환된다") {
+                response.jibunAddress shouldBe "jibunAddress"
+            }
+            Then("부동산 상세정보가 반환된다") {
+                response.houseDetails shouldHaveSize 1
+            }
+            Then("거래 정보가 반환된다") {
+                response.houseDetails.first().deals shouldHaveSize 1
+            }
+        }
+        When("유일하지 않은 (도로명,단지명) 으로 HouseDetails 까지 조회하면") {
+            every { houseRepository.findByRoadAddressAndDanjiName(any(), any()) } throws Exception()
+            Then("Exception 이 발생한다") {
+                shouldThrow<Exception> {
+                    houseService.findByRoadAddressAndDanjiNameWithHouseDetails("roadAddress", "danjiName")
+                }
+            }
+        }
+        When("존재하지 않는 (도로명,단지명) 으로 HouseDetails 까지 조회하면") {
+            every { houseRepository.findByRoadAddressAndDanjiName(any(), any()) } throws Exception()
+            Then("Exception 이 발생한다") {
+                shouldThrow<Exception> {
+                    houseService.findByRoadAddressAndDanjiNameWithHouseDetails("roadAddress", "danjiName")
                 }
             }
         }
