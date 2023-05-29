@@ -1,12 +1,8 @@
 package estert.domain.house_detail
 
+import estert.domain.deal.Deal
 import estert.domain.house.House
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 import java.math.BigDecimal
 
 @Entity
@@ -25,6 +21,9 @@ class HouseDetail(
     @JoinColumn(name = "house_id")
     var house: House = house
         private set
+
+    @OneToMany(mappedBy = "houseDetail", cascade = [CascadeType.REMOVE])
+    val deals: MutableSet<Deal> = hashSetOf()
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

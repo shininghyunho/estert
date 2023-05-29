@@ -38,8 +38,7 @@ class House (
         private set
 
     @OneToMany(mappedBy = "house", cascade = [CascadeType.REMOVE])
-    var houseDetails: MutableSet<HouseDetail> = hashSetOf()
-        private set
+    val houseDetails: MutableSet<HouseDetail> = hashSetOf()
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
