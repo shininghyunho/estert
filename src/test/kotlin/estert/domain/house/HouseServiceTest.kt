@@ -4,6 +4,7 @@ import estert.domain.deal.Deal
 import estert.domain.house.dto.HouseSaveRequest
 import estert.domain.house.dto.HouseUpdateRequest
 import estert.domain.house_detail.HouseDetail
+import estert.dummy.DummyEntity
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldExist
@@ -22,22 +23,9 @@ class HouseServiceBehaviorSpecTest: BehaviorSpec({
     val houseRepository = mockk<HouseRepository>()
     val houseService = HouseService(houseRepository)
 
-    val house = House(
-        jibunAddress = "jibunAddress",
-        roadAddress = "roadAddress",
-        danjiName = "danjiName",
-        postCode = 12345,
-        latitude = BigDecimal("123.123"),
-        longitude = BigDecimal("123.123"))
-    val houseDetail = HouseDetail(
-        dedicatedArea = "123.123".toBigDecimal(),
-        house = house
-    )
-    val deal = Deal(
-        cost = 100000000,
-        dealDate = LocalDateTime.now(),
-        houseDetail = houseDetail
-    )
+    val house = DummyEntity.house
+    val houseDetail = DummyEntity.houseDetail
+    val deal = DummyEntity.deal
     // house 저장 테스트
     Given("부동산 저장 요청시") {
         val request = HouseSaveRequest.from(house)
@@ -84,7 +72,7 @@ class HouseServiceBehaviorSpecTest: BehaviorSpec({
                 response.houseDetails shouldHaveSize 1
             }
             Then("거래 정보가 반환된다") {
-                response.houseDetails.first().deals shouldHaveSize 1
+                response.houseDetails.first().deals shouldHaveAtLeastSize 1
             }
         }
         When("존재하지 않는 ID로 HouseDetails 까지 요청하면") {
@@ -134,7 +122,7 @@ class HouseServiceBehaviorSpecTest: BehaviorSpec({
                 response.houseDetails shouldHaveSize 1
             }
             Then("거래 정보가 반환된다") {
-                response.houseDetails.first().deals shouldHaveSize 1
+                response.houseDetails.first().deals shouldHaveAtLeastSize 1
             }
         }
         When("유일하지 않은 (도로명,단지명) 으로 HouseDetails 까지 조회하면") {

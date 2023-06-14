@@ -1,0 +1,4 @@
+spring.config.activate.on-profile: vworld
+vworld:
+  apiKey: "8425B03A-0112-30A8-AD77-74D7F5FD6C3A"
+  domain: "jipsayo.com"

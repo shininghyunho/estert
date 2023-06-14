@@ -15,7 +15,7 @@ class House (
     jibunAddress: String,
     roadAddress: String,
     danjiName: String,
-    postCode: Int,
+    postCode: String,
     latitude: BigDecimal,
     longitude: BigDecimal,
 ){
@@ -28,7 +28,7 @@ class House (
     var danjiName: String = danjiName
         private set
 
-    var postCode: Int = postCode
+    var postCode: String = postCode
         private set
 
     var latitude: BigDecimal = latitude
@@ -45,7 +45,7 @@ class House (
     val id: Long = 0
     
     // update
-    fun update(jibunAddress: String?=null, roadAddress: String?=null, danjiName: String?=null, postCode: Int?=null, latitude: String?=null, longitude: String?=null) {
+    fun update(jibunAddress: String?=null, roadAddress: String?=null, danjiName: String?=null, postCode: String?=null, latitude: String?=null, longitude: String?=null) {
         jibunAddress?.let { this.jibunAddress = it }
         roadAddress?.let { this.roadAddress = it }
         danjiName?.let { this.danjiName = it }

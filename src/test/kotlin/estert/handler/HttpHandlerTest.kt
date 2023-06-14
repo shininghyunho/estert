@@ -1,5 +1,6 @@
 package estert.handler
 
+import estert.common.handler.HttpHandler
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.string.shouldContain
@@ -12,7 +13,7 @@ import java.net.URL
 class HttpHandlerTest: BehaviorSpec({
     Given("GET 요청시") {
         When("정상 요청을 하면") {
-            // string to inputstream
+            // string to input stream
             val mockResponse = "mock response"
             val url = mockk<URL>() {
                 every { openConnection() } returns mockk<HttpURLConnection>(relaxed = true) {

@@ -1,5 +1,6 @@
-# h2 database
 spring:
+  config.activate.on-profile: local-db
+  # h2 database
   datasource:
     url: jdbc:h2:mem:testdb
     username: sa
