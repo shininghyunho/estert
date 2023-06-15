@@ -9,7 +9,7 @@ import estert.domain.dealHistory.dto.DealHistorySaveRequest
 import estert.domain.house.HouseService
 import estert.domain.house_detail.HouseDetailService
 import estert.domain.house_detail.dto.HouseDetailSaveRequest
-import estert.domain.molitApart.MolitApartService
+import estert.domain.molitApart.MolitApartHandler
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,13 +20,13 @@ class DealHistoryService(
     private val houseService: HouseService,
     private val houseDetailService: HouseDetailService,
     private val dealService: DealService,
-    private val molitApartService: MolitApartService,
+    private val molitApartHandler: MolitApartHandler,
     private val addressHandler: AddressHandler
 ) {
     @Transactional
     fun save(request: DealHistorySaveRequest) {
         val molitApartList = try {
-            molitApartService.getMolitApartList(request)
+            molitApartHandler.getMolitApartList(request)
         } catch (e: Exception) {
             log.error("molit api 호출 실패 : ${e.message}")
             throw CustomException(message = "molit api 호출 실패", detail = e.message)

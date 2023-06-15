@@ -21,4 +21,15 @@ object DummyEntity {
         dealDate = java.time.LocalDateTime.now(),
         houseDetail = houseDetail
     )
+    val molitApart = estert.domain.molitApart.dto.MolitApart(
+        roadName = "roadName",
+        roadNameCityCode = "roadNameCityCode",
+        roadNameBuildingMainCode = "roadNameBuildingMainCode",
+        roadNameBuildingSubCode = "roadNameBuildingSubCode",
+        cost = "100,000,000",
+        dedicatedArea = "123.123",
+        dealYear = "2021",
+        dealMonth = "1",
+        dealDay = "1"
+    )
 }

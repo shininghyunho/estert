@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component
 import java.io.File
 import javax.xml.parsers.SAXParser
 
-private val log = LoggerFactory.getLogger(MolitApartService::class.java)
+private val log = LoggerFactory.getLogger(MolitApartHandler::class.java)
 
 @Component
-class MolitApartService (
+class MolitApartHandler (
     private val saxParser: SAXParser,
     private val molitApartXmlHandler: MolitApartXmlHandler,
     private val molitProperty : MolitProperty
