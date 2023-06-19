@@ -1,4 +1,4 @@
-package estert.domain.vWorld
+package estert.domain.api.vWorld
 
 import estert.domain.api.vworld.config.VWorldProperties
 import io.kotest.core.spec.style.StringSpec

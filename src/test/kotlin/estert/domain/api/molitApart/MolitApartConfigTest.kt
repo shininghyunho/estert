@@ -1,4 +1,4 @@
-package estert.domain.molitApart
+package estert.domain.api.molitApart
 
 import estert.domain.api.molitApart.config.MolitConfig
 import estert.domain.api.molitApart.config.MolitProperties

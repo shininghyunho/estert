@@ -10,6 +10,7 @@ import estert.domain.api.molitApart.MolitApartHandler
 import estert.dummy.DummyEntity
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.mockk.every
@@ -71,11 +72,15 @@ class DealHistoryServiceTest: BehaviorSpec({
             every { houseService.saveAndReturnEntity(any()) } returns house
             every { houseDetailService.saveAndReturnEntity(any()) } returns houseDetail
             every { dealService.save(any()) } returns 1L
-            dealHistoryService.save(DealHistorySaveRequest(pageNo = 1, perPage = 10, lawdCd = "11110", dealYmd = "202101"))
+            every { molitApartHandler.getTotalCount() } returns 10
+            val response = dealHistoryService.save(DealHistorySaveRequest(pageNo = 1, perPage = 10, lawdCd = "11110", dealYmd = "202101"))
             Then("거래 내역이 저장된다") {
                 verify { houseService.saveAndReturnEntity(any()) }
                 verify { houseDetailService.saveAndReturnEntity(any()) }
                 verify { dealService.save(any()) }
+            }
+            Then("전체 거래 내역 갯수가 반환된다") {
+                response shouldBeGreaterThan 0
             }
         }
         When("Molit Apart Api 호출에 실패하면") {

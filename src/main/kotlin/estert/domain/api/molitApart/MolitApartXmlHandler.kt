@@ -11,12 +11,10 @@ class MolitApartXmlHandler: DefaultHandler() {
     val molitApartList: ThreadLocal<MutableList<MolitApart>> = ThreadLocal.withInitial { mutableListOf() }
     private var molitApart: MolitApart? = null
     private var value: String? = null
-    private var totalCnt: Int = 0
+    var totalCnt: ThreadLocal<Int> = ThreadLocal.withInitial { 0 }
 
     // 문서 시작
-    override fun startDocument() {
-        totalCnt = 0
-    }
+    override fun startDocument() {}
 
     // 문서 끝
     override fun endDocument() {}
@@ -41,6 +39,7 @@ class MolitApartXmlHandler: DefaultHandler() {
             "년" -> molitApart?.dealYear = value
             "월" -> molitApart?.dealMonth = value
             "일" -> molitApart?.dealDay = value
+            "totalCount" -> totalCnt.set(value?.toInt() ?: 0)
         }
     }
 

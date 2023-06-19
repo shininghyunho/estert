@@ -4,6 +4,7 @@ spring:
     group:
       local:
         - local-db
+        - local-scheduling
       dev:
         - dev-db
     # common

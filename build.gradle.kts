@@ -36,6 +36,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     // h2
     runtimeOnly("com.h2database:h2")
+    // batch
+    implementation("org.springframework.boot:spring-boot-starter-batch")
 
     // mockk
     testImplementation("io.mockk:mockk:1.12.0")

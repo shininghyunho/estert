@@ -47,6 +47,8 @@ class MolitApartHandler (
         throw CustomException(message = "유효한 molit api key 가 없습니다.")
     }
 
+    fun getTotalCount(): Int = molitApartXmlHandler.totalCnt.get()
+
     private fun makeXmlFile(httpResponse: String): File {
         val xml = File.createTempFile("molitApart", ".xml")
         if(httpResponse.isNotEmpty()) xml.writeText(httpResponse)

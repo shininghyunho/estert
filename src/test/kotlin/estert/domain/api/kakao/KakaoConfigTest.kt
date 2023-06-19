@@ -1,4 +1,4 @@
-package estert.domain.kakao
+package estert.domain.api.kakao
 
 import estert.domain.api.kakao.config.KakaoProperties
 import io.kotest.core.spec.style.StringSpec

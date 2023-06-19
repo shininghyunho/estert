@@ -23,8 +23,11 @@ class DealHistoryService(
     private val molitApartHandler: MolitApartHandler,
     private val addressHandler: AddressHandler
 ) {
+    /**
+     * return : 저장된 거래 내역 수
+     */
     @Transactional
-    fun save(request: DealHistorySaveRequest) {
+    fun save(request: DealHistorySaveRequest) : Int{
         val molitApartList = try {
             molitApartHandler.getMolitApartList(request)
         } catch (e: Exception) {
@@ -36,7 +39,7 @@ class DealHistoryService(
                 molitApart.validate()
             } catch (e: Exception) {
                 log.error("molitApart validation 실패 : ${e.message}")
-                return
+                return@forEach // continue
             }
             try {
                 val house = houseService.saveAndReturnEntity(addressHandler.makeHouseSaveRequest(validMolitApart))
@@ -50,9 +53,12 @@ class DealHistoryService(
                 ))
             } catch (e: Exception) {
                 log.error("dealHistory 저장 실패 : ${e.message}")
-                return
+                return@forEach
             }
         }
+
+        // 저장된 거래 내역 수
+        return molitApartHandler.getTotalCount()
     }
 
     @Transactional(readOnly = true)
