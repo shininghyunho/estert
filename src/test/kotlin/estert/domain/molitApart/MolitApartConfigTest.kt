@@ -1,7 +1,7 @@
 package estert.domain.molitApart
 
-import estert.domain.molitApart.config.MolitConfig
-import estert.domain.molitApart.config.MolitProperties
+import estert.domain.api.molitApart.config.MolitConfig
+import estert.domain.api.molitApart.config.MolitProperties
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldNotBe
 import org.yaml.snakeyaml.Yaml

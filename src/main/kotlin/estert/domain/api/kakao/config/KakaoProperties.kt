@@ -1,4 +1,4 @@
-package estert.domain.kakao.config
+package estert.domain.api.kakao.config
 
 class KakaoProperties {
     lateinit var kakao: KakaoProperty

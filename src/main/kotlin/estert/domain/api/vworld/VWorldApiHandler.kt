@@ -1,10 +1,10 @@
-package estert.domain.vworld
+package estert.domain.api.vworld
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import estert.common.handler.HttpHandler
-import estert.domain.molitApart.dto.MolitApart
-import estert.domain.vworld.config.VWorldProperty
+import estert.domain.api.molitApart.dto.MolitApart
+import estert.domain.api.vworld.config.VWorldProperty
 import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 import java.net.URL

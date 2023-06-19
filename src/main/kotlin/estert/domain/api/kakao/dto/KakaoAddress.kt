@@ -1,4 +1,4 @@
-package estert.domain.kakao.dto
+package estert.domain.api.kakao.dto
 
 import java.math.BigDecimal
 

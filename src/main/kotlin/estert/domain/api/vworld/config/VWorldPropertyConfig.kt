@@ -1,4 +1,4 @@
-package estert.domain.kakao.config
+package estert.domain.api.vworld.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -7,20 +7,20 @@ import org.yaml.snakeyaml.constructor.Constructor
 import java.io.InputStream
 
 @Configuration
-class KakaoPropertyConfig {
+class VWorldPropertyConfig {
     @Bean
-    fun kakaoProperty() : KakaoProperty {
-        return kakaoProperties().kakao
+    fun vWorldProperty() : VWorldProperty {
+        return vworldProperties().vworld
     }
 
-    private fun kakaoProperties() : KakaoProperties {
-        return Yaml(Constructor(KakaoProperties::class.java))
+    private fun vworldProperties() : VWorldProperties {
+        return Yaml(Constructor(VWorldProperties::class.java))
             .load(inputStream())
     }
 
     private fun inputStream() : InputStream {
         return this.javaClass
             .classLoader
-            .getResourceAsStream("kakao.yml")!!
+            .getResourceAsStream("vworld.yml")!!
     }
 }

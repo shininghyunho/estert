@@ -1,10 +1,10 @@
-package estert.domain.kakao
+package estert.domain.api.kakao
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import estert.domain.kakao.config.KakaoProperty
+import estert.domain.api.kakao.config.KakaoProperty
 import estert.common.handler.HttpHandler
-import estert.domain.kakao.dto.KakaoAddress
+import estert.domain.api.kakao.dto.KakaoAddress
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
 import java.net.URL

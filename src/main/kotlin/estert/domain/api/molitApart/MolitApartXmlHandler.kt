@@ -1,6 +1,6 @@
-package estert.domain.molitApart
+package estert.domain.api.molitApart
 
-import estert.domain.molitApart.dto.MolitApart
+import estert.domain.api.molitApart.dto.MolitApart
 import org.springframework.stereotype.Component
 import org.xml.sax.Attributes
 import org.xml.sax.helpers.DefaultHandler

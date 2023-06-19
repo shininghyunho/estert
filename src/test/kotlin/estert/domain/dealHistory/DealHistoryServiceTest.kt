@@ -6,7 +6,7 @@ import estert.domain.dealHistory.dto.DealHistorySaveRequest
 import estert.domain.house.HouseService
 import estert.domain.house.dto.HouseGetResponse
 import estert.domain.house_detail.HouseDetailService
-import estert.domain.molitApart.MolitApartHandler
+import estert.domain.api.molitApart.MolitApartHandler
 import estert.dummy.DummyEntity
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec

@@ -1,4 +1,4 @@
-package estert.domain.molitApart.config
+package estert.domain.api.molitApart.config
 
 class MolitProperties {
     lateinit var molit: MolitProperty

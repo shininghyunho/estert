@@ -1,4 +1,4 @@
-package estert.domain.molitApart.dto
+package estert.domain.api.molitApart.dto
 
 import java.time.LocalDateTime
 

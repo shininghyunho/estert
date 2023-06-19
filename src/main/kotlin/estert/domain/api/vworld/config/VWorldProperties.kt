@@ -1,4 +1,4 @@
-package estert.domain.vworld.config
+package estert.domain.api.vworld.config
 
 class VWorldProperties {
     lateinit var vworld: VWorldProperty

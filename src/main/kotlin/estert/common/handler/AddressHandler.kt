@@ -1,9 +1,9 @@
 package estert.common.handler
 
 import estert.domain.house.dto.HouseSaveRequest
-import estert.domain.molitApart.dto.MolitApart
-import estert.domain.kakao.KakaoApiHandler
-import estert.domain.vworld.VWorldApiHandler
+import estert.domain.api.molitApart.dto.MolitApart
+import estert.domain.api.kakao.KakaoApiHandler
+import estert.domain.api.vworld.VWorldApiHandler
 import org.springframework.stereotype.Component
 
 @Component

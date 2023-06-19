@@ -1,10 +1,10 @@
-package estert.domain.molitApart
+package estert.domain.api.molitApart
 
-import estert.domain.molitApart.config.MolitProperty
+import estert.domain.api.molitApart.config.MolitProperty
 import estert.common.error.CustomException
 import estert.domain.dealHistory.dto.DealHistorySaveRequest
 import estert.common.handler.HttpHandler
-import estert.domain.molitApart.dto.MolitApart
+import estert.domain.api.molitApart.dto.MolitApart
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.io.File

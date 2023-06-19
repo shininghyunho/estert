@@ -1,4 +1,4 @@
-package estert.domain.molitApart.config
+package estert.domain.api.molitApart.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

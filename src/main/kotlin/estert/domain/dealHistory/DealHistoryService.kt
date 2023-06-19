@@ -9,7 +9,7 @@ import estert.domain.dealHistory.dto.DealHistorySaveRequest
 import estert.domain.house.HouseService
 import estert.domain.house_detail.HouseDetailService
 import estert.domain.house_detail.dto.HouseDetailSaveRequest
-import estert.domain.molitApart.MolitApartHandler
+import estert.domain.api.molitApart.MolitApartHandler
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

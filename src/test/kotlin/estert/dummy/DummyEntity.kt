@@ -1,5 +1,6 @@
 package estert.dummy
 
+import estert.domain.api.molitApart.dto.MolitApart
 import estert.domain.house.House
 import estert.domain.house_detail.HouseDetail
 
@@ -21,7 +22,7 @@ object DummyEntity {
         dealDate = java.time.LocalDateTime.now(),
         houseDetail = houseDetail
     )
-    val molitApart = estert.domain.molitApart.dto.MolitApart(
+    val molitApart = MolitApart(
         roadName = "roadName",
         roadNameCityCode = "roadNameCityCode",
         roadNameBuildingMainCode = "roadNameBuildingMainCode",
