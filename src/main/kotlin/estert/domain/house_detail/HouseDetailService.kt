@@ -13,9 +13,14 @@ class HouseDetailService(
     // save
     @Transactional
     fun save(request: HouseDetailSaveRequest): Long {
+        return saveAndReturnEntity(request).id
+    }
+
+    @Transactional
+    fun saveAndReturnEntity(request: HouseDetailSaveRequest): HouseDetail {
         return houseDetailRepository.save(HouseDetail(
             dedicatedArea = request.dedicatedArea.toBigDecimal(),
             house = houseRepository.findById(request.houseId).get()
-        )).id
+        ))
     }
 }

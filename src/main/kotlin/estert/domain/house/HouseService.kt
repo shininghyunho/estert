@@ -12,7 +12,12 @@ class HouseService (
 ){
     @Transactional
     fun save(request : HouseSaveRequest): Long {
-        return houseRepository.save(request.toEntity()).id
+        return saveAndReturnEntity(request).id
+    }
+
+    @Transactional
+    fun saveAndReturnEntity(request : HouseSaveRequest): House {
+        return houseRepository.save(request.toEntity())
     }
 
     @Transactional(readOnly = true)

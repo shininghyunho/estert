@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    default: local
+    group:
+      local:
+        - local-db
+        - local-scheduling
+      dev:
+        - dev-db
+    # common
+    include:
+      - kakao
+      - molit
+      - vworld

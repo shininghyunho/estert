@@ -4,6 +4,7 @@ import estert.domain.deal.dto.DealSaveRequest
 import estert.domain.house.House
 import estert.domain.house_detail.HouseDetail
 import estert.domain.house_detail.HouseDetailRepository
+import estert.dummy.DummyEntity
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContain
@@ -19,23 +20,9 @@ class DealServiceTest : BehaviorSpec({
     val houseDetailRepository = mockk<HouseDetailRepository>()
     val dealService = DealService(dealRepository, houseDetailRepository)
 
-    val house = House(
-        jibunAddress = "jibunAddress",
-        roadAddress = "roadAddress",
-        danjiName = "danjiName",
-        postCode = 12345,
-        latitude = "123.123".toBigDecimal(),
-        longitude = "123.123".toBigDecimal()
-    )
-    val houseDetail = HouseDetail(
-        dedicatedArea = "123.123".toBigDecimal(),
-        house = house
-    )
-    val deal = Deal(
-        cost = 100000000,
-        dealDate = LocalDateTime.now(),
-        houseDetail = houseDetail
-    )
+    val house = DummyEntity.house
+    val houseDetail = DummyEntity.houseDetail
+    val deal = DummyEntity.deal
 
     Given("deal 저장 요청시") {
         val request = DealSaveRequest(

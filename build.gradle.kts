@@ -1,9 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    val springBootVersion = "3.0.6"
     val kotlinVersion = "1.7.22"
 
-    id("org.springframework.boot") version "3.0.6"
+    id("org.springframework.boot") version springBootVersion
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version kotlinVersion
     // included allOpen
@@ -23,14 +24,20 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    // web
+    implementation("org.springframework.boot:spring-boot-starter-web")
     // jpa
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // stdlib-jdk8
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     // mysql jdbc
     implementation("mysql:mysql-connector-java:8.0.27")
+    // gson
+    implementation("com.google.code.gson:gson:2.8.9")
     // h2
     runtimeOnly("com.h2database:h2")
+    // batch
+    implementation("org.springframework.boot:spring-boot-starter-batch")
 
     // mockk
     testImplementation("io.mockk:mockk:1.12.0")

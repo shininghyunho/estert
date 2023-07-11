@@ -1,0 +1,4 @@
+spring.config.activate.on-profile: local-scheduling
+# stop job
+spring.batch.job.enabled: false
+scheduling.enabled: false

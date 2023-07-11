@@ -6,6 +6,7 @@ import estert.domain.house_detail.HouseDetail
 import estert.domain.house_detail.HouseDetailRepository
 import estert.domain.house_detail.HouseDetailService
 import estert.domain.house_detail.dto.HouseDetailSaveRequest
+import estert.dummy.DummyEntity
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -19,18 +20,8 @@ class HouseDetailServiceTest : BehaviorSpec({
     val houseRepository = mockk<HouseRepository>()
     val houseDetailService = HouseDetailService(houseDetailRepository, houseRepository)
 
-    val house = House(
-        jibunAddress = "jibunAddress",
-        roadAddress = "roadAddress",
-        danjiName = "danjiName",
-        postCode = 12345,
-        latitude = "123.123".toBigDecimal(),
-        longitude = "123.123".toBigDecimal()
-    )
-    val houseDetail = HouseDetail(
-        dedicatedArea = "123.123".toBigDecimal(),
-        house = house
-    )
+    val house = DummyEntity.house
+    val houseDetail = DummyEntity.houseDetail
 
     // houseDetail 저장 테스트
     Given("houseDetail 저장 요청시") {

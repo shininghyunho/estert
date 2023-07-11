@@ -6,7 +6,7 @@ data class HouseSaveRequest (
     val jibunAddress: String,
     val roadAddress: String,
     val danjiName: String,
-    val postCode: Int,
+    val postCode: String,
     val latitude: String,
     val longitude: String,
 )  {
