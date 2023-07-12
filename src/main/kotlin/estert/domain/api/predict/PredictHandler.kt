@@ -6,7 +6,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class PredictHandler {
-    fun getPredictList(request: PredictRequest): List<PredictResponse> {
-        return listOf()
+    /**
+     * return : 예측 결과 Map (key : houseId, value : 예상 시간)
+     */
+    fun getPredictMap(request: PredictRequest): Map<Long,Int> {
+        // TODO : 예측 서버 API 호출
+        return mapOf()
     }
 }

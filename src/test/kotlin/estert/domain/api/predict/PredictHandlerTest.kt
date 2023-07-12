@@ -13,14 +13,13 @@ class PredictHandlerTest : BehaviorSpec({
     Given("예측 요청시") {
         val request = PredictRequest(
             time = 1,
-            price = 1,
             latitude = "1",
             longitude = "1",
         )
         When("정상 요청을 하면") {
-            val response = predictHandler.getPredictList(request)
+            val response = predictHandler.getPredictMap(request)
             Then("예측 결과를 반환한다") {
-                response shouldBe listOf()
+                response shouldBe mapOf()
             }
         }
     }
