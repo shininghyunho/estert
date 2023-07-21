@@ -1,6 +1,7 @@
 package estert.dummy
 
 import estert.domain.api.molitApart.dto.MolitApart
+import estert.domain.api.predict.dto.PredictResponse
 import estert.domain.house.House
 import estert.domain.house_detail.HouseDetail
 
@@ -32,5 +33,19 @@ object DummyEntity {
         dealYear = "2021",
         dealMonth = "1",
         dealDay = "1"
+    )
+    val predictHouseList = listOf(
+        PredictResponse.PredictHouse(
+            id = 1L,
+            time = 30
+        ),
+        PredictResponse.PredictHouse(
+            id = 2L,
+            time = 25
+        ),
+        PredictResponse.PredictHouse(
+            id = 3L,
+            time = 35
+        )
     )
 }
