@@ -11,7 +11,7 @@ import java.net.URL
 class PredictHandler(
     val gson : Gson
 ){
-    fun getPredictList(request: PredictRequest): PredictResponse {
+    fun predict(request: PredictRequest): PredictResponse {
         val httpResponse = try {
             val url = makePredictUrl(request)
             HttpHandler.get(url)

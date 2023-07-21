@@ -6,9 +6,6 @@ import estert.domain.api.predict.dto.PredictRequest
 import estert.domain.api.predict.dto.PredictResponse
 import estert.dummy.DummyEntity
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.collections.shouldContain
-import io.kotest.matchers.comparables.shouldBeGreaterThan
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
@@ -29,7 +26,7 @@ class PredictHandlerTest : BehaviorSpec({
         When("정상 요청을 하면") {
             every { HttpHandler.get(any()) } returns ""
             every { gson.fromJson("", any<Class<Array<PredictResponse.PredictHouse>>>()) } returns DummyEntity.predictHouseList.toTypedArray()
-            val response = predictHandler.getPredictList(request)
+            val response = predictHandler.predict(request)
             Then("예측 결과를 반환한다") {
                 response.predictHouseList.size shouldBe DummyEntity.predictHouseList.size
                 // print all

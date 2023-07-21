@@ -7,6 +7,7 @@ import estert.domain.house.HouseService
 import estert.domain.house.dto.HouseGetResponse
 import estert.domain.house_detail.HouseDetailService
 import estert.domain.api.molitApart.MolitApartHandler
+import estert.domain.api.predict.PredictHandler
 import estert.dummy.DummyEntity
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -23,7 +24,15 @@ class DealHistoryServiceTest: BehaviorSpec({
     val dealService = mockk<DealService>()
     val molitApartHandler = mockk<MolitApartHandler>()
     val addressHandler = mockk<AddressHandler>()
-    val dealHistoryService = DealHistoryService(houseService, houseDetailService, dealService, molitApartHandler, addressHandler)
+    val predictHandler = mockk<PredictHandler>()
+    val dealHistoryService = DealHistoryService(
+        houseService,
+        houseDetailService,
+        dealService,
+        molitApartHandler,
+        addressHandler,
+        predictHandler
+    )
 
     val house = DummyEntity.house
     val houseDetail = DummyEntity.houseDetail
@@ -89,6 +98,13 @@ class DealHistoryServiceTest: BehaviorSpec({
                 shouldThrow<Exception> {
                     dealHistoryService.save(DealHistorySaveRequest(pageNo = 1, perPage = 10, lawdCd = "11110", dealYmd = "202101"))
                 }
+            }
+        }
+    }
+
+    Given("거래 내역 필터링시") {
+        When("정상 요청하면") {
+            Then("거래내역이 필터링 된다.") {
             }
         }
     }
