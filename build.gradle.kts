@@ -38,6 +38,8 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     // batch
     implementation("org.springframework.boot:spring-boot-starter-batch")
+    // jackson-module-kotlin
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // mockk
     testImplementation("io.mockk:mockk:1.12.0")
