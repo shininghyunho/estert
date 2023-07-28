@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: local
+    active: local
     group:
       local:
         - local-db
@@ -12,3 +12,6 @@ spring:
       - kakao
       - molit
       - vworld
+  # default features
+  jpa:
+    open-in-view: false
