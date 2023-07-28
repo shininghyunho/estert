@@ -1,3 +1,2 @@
-spring.config.activate.on-profile: kakao
 kakao:
   apiKey: "2aa3b0e83391bf1ae258957941ef8564"
