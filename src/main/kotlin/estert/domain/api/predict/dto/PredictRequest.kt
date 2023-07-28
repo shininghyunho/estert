@@ -2,6 +2,7 @@ package estert.domain.api.predict.dto
 
 class PredictRequest(
     val time: Int,
-    val latitude: String,
-    val longitude: String,
+    // 위도,경도
+    val latitude: Double,
+    val longitude: Double
 )

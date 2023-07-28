@@ -21,6 +21,6 @@ class KakaoPropertyConfig {
     private fun inputStream() : InputStream {
         return this.javaClass
             .classLoader
-            .getResourceAsStream("kakao.yml")!!
+            .getResourceAsStream("api/application-kakao.yml")!!
     }
 }

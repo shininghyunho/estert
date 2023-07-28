@@ -8,9 +8,9 @@ class KakaoConfigTest : StringSpec({
         "Kakao Yaml 불러오기" {
             val yaml = org.yaml.snakeyaml.Yaml(
                 org.yaml.snakeyaml.constructor.Constructor(KakaoProperties::class.java))
-            // resources\kakao.yml
+            // resources\application-application-kakao.yml
             val inputStream = this.javaClass.classLoader
-                .getResourceAsStream("kakao.yml")
+                .getResourceAsStream("api/application-kakao.yml")
             val kakaoProperties = yaml.load<KakaoProperties>(inputStream)
 
             println(kakaoProperties)

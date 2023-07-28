@@ -1,4 +1,3 @@
-spring.config.activate.on-profile: molit
 molit:
   apiKeyList:
     - "1JBdQZMCAkRsMQpdbldQ0lc3NU%2BRweuoWT4V2bJQrYrBM6TM%2Fpm3c9R8U878%2FoFoV8c521rVU1xQMqS4kKQs7w%3D%3D"

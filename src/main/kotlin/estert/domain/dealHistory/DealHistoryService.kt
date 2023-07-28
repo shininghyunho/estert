@@ -12,18 +12,23 @@ import estert.domain.house_detail.dto.HouseDetailSaveRequest
 import estert.domain.api.molitApart.MolitApartHandler
 import estert.domain.api.predict.PredictHandler
 import estert.domain.api.predict.dto.PredictRequest
-import estert.domain.dealHistory.dto.filter.DealHistoryFilteredRequest
-import estert.domain.dealHistory.dto.filter.DealHistoryFilteredResponse
+import estert.domain.api.predict.dto.PredictResponse
+import estert.domain.deal.dto.DealFilterResponse
+import estert.domain.dealHistory.dto.filter.DealHistoryFilterRequest
+import estert.domain.dealHistory.dto.filter.DealHistoryFilterResponse
 import jakarta.persistence.EntityManager
 import jakarta.persistence.PersistenceContext
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.stream.Stream
 
 private val log = LoggerFactory.getLogger(DealHistoryService::class.java)
 
-// 최대 반환 개수
-private val DEFAULT_LIMIT = 50
+// 필터링 최대 반환 갯수
+private const val MAX_FILTER_COUNT = 100
+// 디폴트 필터링 반환 갯수
+private const val DEFAULT_FILTER_COUNT = 20
 @Service
 class DealHistoryService(
     private val houseService: HouseService,
@@ -33,10 +38,12 @@ class DealHistoryService(
     private val addressHandler: AddressHandler,
     private val predictHandler: PredictHandler
 ) {
+    // 영속성 매니저
     @PersistenceContext
-    private val entityManager: EntityManager? = null
+    private lateinit var em: EntityManager
+
     /**
-     * return : 저장된 거래 내역 수
+     * @return : 저장된 거래 내역 수
      */
     @Transactional
     fun save(request: DealHistorySaveRequest) : Int{
@@ -81,37 +88,92 @@ class DealHistoryService(
     fun get(roadAddress: String, danjiName: String): DealHistory {
         return DealHistory(houseService.findByRoadAddressAndDanjiNameWithHouseDetails(roadAddress, danjiName))
     }
-    // 필터링된 거래 내역
+    
+    /**
+     * @return : 필터링된 거래 내역
+     */
     @Transactional(readOnly = true)
-    fun getFiltered(request: DealHistoryFilteredRequest): List<DealHistoryFilteredResponse> {
-        // TODO : 후보군 Map 을 받아와 가격으로 필터링
-        // 후보군을 Map 으로 받아옴 (houseId, 예상 시간)
-        val houseEstimatedTimeMap = predictHandler.getPredictMap(PredictRequest(
+    fun filter(request: DealHistoryFilterRequest): DealHistoryFilterResponse {
+        // 예측 서버를 이용한 예상시간에 도달할수 있는 houseId, time Map 을 반환
+        val predictedHouseMap = makePredictedHouseMap(PredictRequest(
             time = request.time,
             latitude = request.latitude,
             longitude = request.longitude
         ))
-        // 가격으로 필터링된 거래들
-        val filteredDeals = dealService.findByCostRange(request.lowCost, request.highCost)
 
-        // 시간을 넣어서 반환
-        val ret = mutableListOf<DealHistoryFilteredResponse>()
-        filteredDeals.forEach {deal ->
-            ret.add(DealHistoryFilteredResponse(
-                roadAddress = deal.roadAddress,
-                danjiName = deal.danjiName,
-                cost = deal.cost.toInt(),
-                latitude = deal.latitude.toString(),
-                longitude = deal.longitude.toString(),
-                time = houseEstimatedTimeMap[deal.houseId] ?: 0,
-                dealDate = deal.dealDate.toString(),
-                dedicatedArea = deal.dedicatedArea.toString()
+        // 필터링된 거래 내역을 스트림
+        val dealFilterResponseStream = dealService.getDealFilterResponseStream(
+            houseIdList = predictedHouseMap.keys.toList(),
+            lowCost = request.lowCost,
+            highCost = request.highCost
+        )
+
+        // 필터링된 거래 내역을 예상시간과 함께 반환
+        val dealHistoryList = mutableListOf<DealHistoryFilterResponse.FilteredDealHistory>()
+        dealFilterResponseStream.forEach {
+            dealHistoryList.add(DealHistoryFilterResponse.FilteredDealHistory(
+                dealId = it.dealId,
+                latitude = it.latitude,
+                longitude = it.longitude,
+                estimatedTime = predictedHouseMap[it.houseId] ?: 0
             ))
-            // 영송석 컨텍스트에서 제거
-            entityManager?.detach(deal)
-            // 갯수 체크
-            if (ret.size >= (request.limit ?: DEFAULT_LIMIT)) return@forEach
+            // 영속성 컨텍스트에서 제거
+            em.detach(it)
         }
-        return ret
+
+        // 필터링 반환 갯수를 제한한다.
+        val limitedDealHistoryList = limitFilterCount(request.count, dealHistoryList)
+
+        return DealHistoryFilterResponse(limitedDealHistoryList)
+    }
+
+    /**
+     * 부동산 ID로 예측된 시간을 반환한다.
+     * @return
+     * Map<houseId, time>
+     * @sample
+     * {1: 30, 2: 25, 3: 35}
+     */
+    private fun makePredictedHouseMap(predictRequest: PredictRequest): Map<Long, Int> {
+        val predictResponse = predictHandler.predict(predictRequest)
+        return predictResponse.predictHouseList.associateBy({ it.id }, { it.time })
+    }
+
+    // 필터링 반환 갯수를 제한한다.
+    private fun limitFilterCount(count: Int?,dealHistoryList: List<DealHistoryFilterResponse.FilteredDealHistory>): List<DealHistoryFilterResponse.FilteredDealHistory> {
+        if(count == null) {
+            return dealHistoryList.take(DEFAULT_FILTER_COUNT)
+        }
+
+        else if(count > MAX_FILTER_COUNT) {
+            return dealHistoryList.take(MAX_FILTER_COUNT)
+        }
+
+        return dealHistoryList.take(count)
+    }
+
+    /**
+     * 테스트용 필터링 STUB
+     */
+    @Transactional(readOnly = true)
+    fun filterStub(request: DealHistoryFilterRequest): DealHistoryFilterResponse {
+        val filteredDealHistoryList = listOf(
+            DealHistoryFilterResponse.FilteredDealHistory(
+                dealId = 1,
+                latitude = 36.5,
+                longitude = 127.5,
+                estimatedTime = 30),
+            DealHistoryFilterResponse.FilteredDealHistory(
+                dealId = 2,
+                latitude = 35.5,
+                longitude = 128.5,
+                estimatedTime = 20),
+            DealHistoryFilterResponse.FilteredDealHistory(
+                dealId = 3,
+                latitude = 36.5,
+                longitude = 126.5,
+                estimatedTime = 10),
+        )
+        return DealHistoryFilterResponse(filteredDealHistoryList)
     }
 }

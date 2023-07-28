@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: local
+    active: local
     group:
       local:
         - local-db

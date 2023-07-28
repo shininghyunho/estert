@@ -8,9 +8,9 @@ class VWorldConfigTest : StringSpec({
     "VWorld Yaml 불러오기" {
         val yaml = org.yaml.snakeyaml.Yaml(
             org.yaml.snakeyaml.constructor.Constructor(VWorldProperties::class.java))
-        // resources\vworld.yml
+        // resources\application-application-vworld.yml
         val inputStream = this.javaClass.classLoader
-            .getResourceAsStream("vworld.yml")
+            .getResourceAsStream("api/application-vworld.yml")
         val vworldProperties = yaml.load<VWorldProperties>(inputStream)
 
         println(vworldProperties)
