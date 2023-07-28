@@ -1,6 +1,5 @@
 package estert.domain.api.molitApart
 
-import estert.domain.api.molitApart.config.MolitConfig
 import estert.domain.api.molitApart.config.MolitProperties
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldNotBe
@@ -11,9 +10,9 @@ class MolitApartConfigTest : StringSpec({
     "Molit Yaml 불러오기" {
         val yaml = Yaml(
             org.yaml.snakeyaml.constructor.Constructor(MolitProperties::class.java))
-        // resources\molit.yml
+        // resources\application-application-molit.yml
         val inputStream = this.javaClass.classLoader
-            .getResourceAsStream("molit.yml")
+            .getResourceAsStream("api/application-molit.yml")
         val molitProperties = yaml.load<MolitProperties>(inputStream)
 
         println(molitProperties)

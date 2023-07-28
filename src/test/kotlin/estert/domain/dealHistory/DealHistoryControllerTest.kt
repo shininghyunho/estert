@@ -34,7 +34,7 @@ class DealHistoryControllerTest: BehaviorSpec({
 
 
     Given("GET /deal-history 요청시") {
-        val url = "/deal-history/filter"
+        val url = "/api/v1/deal-history/filter"
         val request = DealHistoryFilterRequest(
             latitude = 36.5,
             longitude = 128.5,

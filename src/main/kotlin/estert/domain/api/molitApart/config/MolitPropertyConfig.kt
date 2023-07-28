@@ -21,6 +21,6 @@ class MolitConfig {
     private fun inputStream() : InputStream {
         return this.javaClass
             .classLoader
-            .getResourceAsStream("molit.yml")!!
+            .getResourceAsStream("api/application-molit.yml")!!
     }
 }

@@ -21,6 +21,6 @@ class VWorldPropertyConfig {
     private fun inputStream() : InputStream {
         return this.javaClass
             .classLoader
-            .getResourceAsStream("vworld.yml")!!
+            .getResourceAsStream("api/application-vworld.yml")!!
     }
 }
