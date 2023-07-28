@@ -88,7 +88,7 @@ class DealHistoryService(
     fun get(roadAddress: String, danjiName: String): DealHistory {
         return DealHistory(houseService.findByRoadAddressAndDanjiNameWithHouseDetails(roadAddress, danjiName))
     }
-
+    
     /**
      * @return : 필터링된 거래 내역
      */
