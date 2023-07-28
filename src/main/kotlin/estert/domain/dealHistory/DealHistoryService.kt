@@ -151,4 +151,29 @@ class DealHistoryService(
 
         return dealHistoryList.take(count)
     }
+
+    /**
+     * 테스트용 필터링 STUB
+     */
+    @Transactional(readOnly = true)
+    fun filterStub(request: DealHistoryFilterRequest): DealHistoryFilterResponse {
+        val filteredDealHistoryList = listOf(
+            DealHistoryFilterResponse.FilteredDealHistory(
+                dealId = 1,
+                latitude = 36.5,
+                longitude = 127.5,
+                estimatedTime = 30),
+            DealHistoryFilterResponse.FilteredDealHistory(
+                dealId = 2,
+                latitude = 35.5,
+                longitude = 128.5,
+                estimatedTime = 20),
+            DealHistoryFilterResponse.FilteredDealHistory(
+                dealId = 3,
+                latitude = 36.5,
+                longitude = 126.5,
+                estimatedTime = 10),
+        )
+        return DealHistoryFilterResponse(filteredDealHistoryList)
+    }
 }
